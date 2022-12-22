@@ -74,24 +74,23 @@
         let scrollRatio = currentY0ffset / sceneInfo[currentScene].scrollHeight;
         //현재 씬에서 스크롤이 된 범위와의 비율 구하기
         
-        rv = parseInt(scrollRatio * 300);
-
-        return scrollRatio;
+        rv = scrollRatio * (values[1] - values[0]) + values[0];
+        
+        return rv;
     }
     function playAnimation() {
-        let obj = sceneInfo[currentScene].objs;
+        let objs = sceneInfo[currentScene].objs;
         let values = sceneInfo[currentScene].values;
+        let currentY0ffset = yOffset - prevScrollHeight;
+        //위에도 언급하지만 currentYOffset은 현재 스크롤의 위치
 
         switch(currentScene) {
             case 0:
-                let messageA_Opacity_0 = values.messageA_Opacity[0];
-                let messageB_Opacity_1 = values.messageA_Opacity[1];
-                let currentY0ffset = yOffset - prevScrollHeight;
-                //위에도 언급하지만 currentYOffset은 현재 스크롤의 위치
-
+                let messageA_Opacity_in = calcValues(values.messageA_Opacity, currentY0ffset);
                 //css 투명도를 현재 스크롤의 위치에 따라 1로 변경을 서서히 해준다
-
-                console.log(calcValues(values, currentY0ffset));
+                console.log(messageA_Opacity_in);
+                objs.messageA.style.Opacity = messageA_Opacity_in;
+                
                 break;
             case 1:
                 break;
