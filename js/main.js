@@ -18,10 +18,15 @@
 				messageB: document.querySelector('#scroll-section-0 .main-message.b'),
 				messageC: document.querySelector('#scroll-section-0 .main-message.c'),
 				messageD: document.querySelector('#scroll-section-0 .main-message.d'),
+                canvas: document.querySelector('#video-canvas-0'),
+                context: document.querySelector('#video-canvas-0').getContext('2d'),
+                videoImages:[]
+                //수천장의 이미지들을 여기에 넣을 예정 
             },
             values: {
 				videoImageCount: 300,
 				imageSequence: [0, 299],
+                //폴더 001 (스크린 0에 사용될 이미지의 갯수)
 				canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
 				messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
 				messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
@@ -38,7 +43,7 @@
 				messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }],
 				messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
 				messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
-				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }]
+				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }],
 			}
         },
         {
@@ -100,6 +105,17 @@
         },
     ];
 
+    function setCanvasImages(){
+        let imgElem;
+
+        for(let i=0; i<sceneInfo[0].values.videoImageCount; i++) {
+            imgElem = new Image();
+            imgElem.src = `./video/001/IMG_${6726+i}.JPG`;
+            sceneInfo[0].objs.videoImages.push(imgElem);
+        }
+    }
+    setCanvasImages();
+
     function setLayout () {
         //Define scrollheight 
        for(let i=0; i < sceneInfo.length; i++){
@@ -123,6 +139,9 @@
        }
 
        document.body.setAttribute('id', `show-scene-${currentScene}`);
+       
+       const heightRatio = window.innerHeight / 1080;
+       sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
     }
 
     function calcValues(values, currentYOffset) {
@@ -159,15 +178,15 @@
         // yOffset : 전체 스크린의 Height 
         const scrollHeight = sceneInfo[currentScene].scrollHeight;
         const scrollRatio = currentYOffset / scrollHeight;
-        console.log(currentScene);
         
         switch (currentScene) {
             case 0:
                 // const messageA_opacity_in = calcValues(values.messageA_opacity_in, currentY0ffset);
                 // const messageA_translateY_in = calcValues(values.messageA_translateY_in, currentY0ffset);
-
                 // const messageA_opacity_out = calcValues(values.messageA_opacity_out, currentY0ffset);
                 // const messageA_translateY_out = calcValues(values.messageA_translateY_out, currentY0ffset);
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                objs.context.drawImage(objs.videoImages[sequence],0,0);
 
                 if (scrollRatio <= 0.22) {
                     // in
