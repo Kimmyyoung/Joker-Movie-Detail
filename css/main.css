@@ -1,3 +1,5 @@
+@charset 'utf-8';
+
 html {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 14px;
@@ -75,9 +77,10 @@ body.before-load {
 	margin-left: 2em;
 }
 .scroll-section {
-	border: solid 1px red;
 	position: relative;
 	padding-top: 50vh;
+	border: solid 1px red;
+
 }
 #scroll-section-0 h1 {
 	position: relative;
@@ -106,17 +109,9 @@ body.before-load {
 	margin-bottom: 0.5em;
 	font-size: 1.2rem;
 }
-
-#scroll-section-2 .b {
-	top: 10%;
-	left: 40%;
+#scroll-section-2 .main-message {
+	font-size: 3.5rem;
 }
-#scroll-section-2 .c {
-	top: 15%;
-	left: 45%;
-}
-
-
 .description {
 	max-width: 1000px;
 	margin: 0 auto;
@@ -130,13 +125,55 @@ body.before-load {
 	font-size: 3rem;
 	color: rgb(29, 29, 31);
 }
+.sticky-elem.desc-message {
+	width: 45%;
+	font-weight: bold;
+	opacity: 0;
+}
+.pin {
+	width: 1px;
+	height: 100px;
+	background: rgb(29, 29, 31);
+}
+#scroll-section-2 .b {
+	top: 10%;
+	left: 40%;
+}
+#scroll-section-2 .c {
+	top: 15%;
+	left: 45%;
+}
+.mid-message {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 0 1rem;
+	font-size: 2rem;
+	color: #888;
+}
+.mid-message strong {
+	color: rgb(29, 29, 31);
+}
+.canvas-caption {
+	max-width: 1000px;
+	margin: -24rem auto 0;
+	padding: 0 1rem;
+	font-size: 1.2rem;
+	color: #888;
+}
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 7rem;
+	color: white;
+	background: darkorange;
+}
 .sticky-elem {
 	display: none;
 	position: fixed;
 	left: 0;
 	width: 100%;
 }
-
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
 #show-scene-2 #scroll-section-2 .sticky-elem,
