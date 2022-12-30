@@ -196,6 +196,7 @@ body.before-load {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	/* scene번째 canvas 가 fit 되게 */
 }
 .image-blend-canvas.sticky {
 	position: fixed;

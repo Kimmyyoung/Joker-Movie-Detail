@@ -105,10 +105,18 @@
                 scrollHeight: 0,
                 objs: {
                     container: document.querySelector('#scroll-section-3'),
-                    canvasCaption: document.querySelector('.canvas-caption')
+                    canvasCaption: document.querySelector('.canvas-caption'),
+                    canvas: document.querySelector('.image-blend-canvas'),
+                    context: document.querySelector('.image-blend-canvas').getContext('2d'),
+                    imagesPath: [
+                        './images/blend-image-1.jpg',
+                        './images/blend-image-2.jpg'
+                    ],
+                    images: []
                 },
                 values: {
-
+                    rect1X : [ 0, 0, {start: 0, end: 0}],
+                    rect2X : [ 0, 0, {start: 0 , end: 0}],
                 }
         },
     ];
@@ -129,7 +137,15 @@
             imgElem2.src = `./video/002/IMG_${7027+i}.JPG`;
             sceneInfo[2].objs.videoImages.push(imgElem2);
         }
+        
+        let imgElem3;
 
+        for(let i=0; i < sceneInfo[3].objs.imagesPath.length; i++) {
+            imgElem3 = new Image();
+            imgElem3.src = sceneInfo[3].objs.imagesPath[i];
+            sceneInfo[3].objs.images.push(imgElem3);
+        }
+        console.log(sceneInfo[3].objs.images);
 
     }
     setCanvasImages();
@@ -254,7 +270,6 @@
             case 1:
                 break;
             case 2:
-
                 let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
                 objs.context.drawImage(objs.videoImages[sequence2],0,0);
 
@@ -301,6 +316,35 @@
                 }
                 break;
             case 3:
+                //디바이스마다 다른 스크린 속에서 가로세로 이미지가 꽉 채우게 하기 위해 비율을 구해야한다.
+                const widthRatio = window.innerWidth / objs.canvas.width;
+                const heightRatio = window.innerHeight / objs.canvas.height;
+                let canvasScaleRatio;
+
+                if(widthRatio <= heightRatio) {
+                    canvasScaleRatio = heightRatio;
+                }else{
+                    canvasScaleRatio = widthRatio;
+                }
+                
+                
+                objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                objs.context.drawImage(objs.images[0],0,0);
+
+                const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio;
+                const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+                const whiteRectWidth = recalculatedInnerWidth * 0.15;
+				values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+				values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
+				values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+				values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+
+				// 좌우 흰색 박스 그리기
+				objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth),objs.canvas.height);
+                objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth),objs.canvas.height);
+
+
                 break;
         }
         //해당 신 인덱스 일때만 애니메이션을 실행 할 것 
@@ -314,14 +358,15 @@
             prevScrollHeight += sceneInfo[i].scrollHeight;
         }
 
-        if( yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight){
+        if( yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight ) {
             enterNewScene = true;
             currentScene++;
             document.body.setAttribute('id',`show-scene-${currentScene}`);
         }
 
         if( yOffset < prevScrollHeight ) {
-            if(currentScene === 0) return; //IE : currentScene could be "-1" => exception code
+            if(currentScene === 0) return; 
+            //IE : currentScene could be "-1" => exception code
             enterNewScene = true;
             currentScene--;
             document.body.setAttribute('id',`show-scene-${currentScene}`);
