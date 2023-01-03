@@ -117,6 +117,7 @@
                 values: {
                     rect1X : [ 0, 0, {start: 0, end: 0}],
                     rect2X : [ 0, 0, {start: 0 , end: 0}],
+                    rectStartY : 0,
                 }
         },
     ];
@@ -145,7 +146,6 @@
             imgElem3.src = sceneInfo[3].objs.imagesPath[i];
             sceneInfo[3].objs.images.push(imgElem3);
         }
-        console.log(sceneInfo[3].objs.images);
 
     }
     setCanvasImages();
@@ -205,6 +205,7 @@
         
         return rv;
     }
+
     function playAnimation() {
         const objs = sceneInfo[currentScene].objs;
         const values = sceneInfo[currentScene].values;
@@ -314,12 +315,51 @@
                     objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
                     objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                 }
+
+                //currentScene에서 캔버스 미리 그리기 처리 (약간 부자연스러운 부분 error 처리)
+                if(scrollRatio > 0.9) {
+                    const objs = sceneInfo[3].objs;
+                    const widthRatio = window.innerWidth / objs.canvas.width;
+                    const heightRatio = window.innerHeight / objs.canvas.height;
+                    let canvasScaleRatio;
+                    // const, let 으로 선언한 변수는 해당 중괄호 안에서만 사용 가능
+
+                    if(widthRatio <= heightRatio) {
+                        canvasScaleRatio = heightRatio;
+                    }else{
+                        canvasScaleRatio = widthRatio;
+                    }
+                    
+                    
+                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                    objs.context.fillStyle = 'white';
+                    //색상을 흰색으로 변경 (rect 부분)
+                    objs.context.drawImage(objs.images[0],0,0);
+    
+                    const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+                    const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+                    
+                    const whiteRectWidth = recalculatedInnerWidth * 0.15;
+                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+                    values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
+                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+    
+                    //좌우 흰색 박스 그리기
+                    objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
+                    objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
+    
+    
+                }
+
+
                 break;
             case 3:
                 //디바이스마다 다른 스크린 속에서 가로세로 이미지가 꽉 채우게 하기 위해 비율을 구해야한다.
                 const widthRatio = window.innerWidth / objs.canvas.width;
                 const heightRatio = window.innerHeight / objs.canvas.height;
                 let canvasScaleRatio;
+                let step = 0; 
 
                 if(widthRatio <= heightRatio) {
                     canvasScaleRatio = heightRatio;
@@ -329,10 +369,24 @@
                 
                 
                 objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                objs.context.fillStyle = 'white';
+                //색상을 흰색으로 변경 (rect 부분)
                 objs.context.drawImage(objs.images[0],0,0);
 
-                const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio;
+                const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                 const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+                
+                if(!values.rectStartY) {
+                    // values.rectStartY = objs.canvas.getBoundingClientRect().top;
+                    values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) /2 ;
+                    //이미지를 scale 처리 했기 때문에 scale 해서 작게 한 만큼을 더해주어야한다.
+                    values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight; 
+                    values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight; 
+
+                    values.rect1X[2].end = values.rectStartY / scrollHeight;
+                    values.rect2X[2].end = values.rectStartY / scrollHeight;
+                }
+                
 
                 const whiteRectWidth = recalculatedInnerWidth * 0.15;
 				values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
@@ -340,10 +394,29 @@
 				values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
 				values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
 
-				// 좌우 흰색 박스 그리기
-				objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth),objs.canvas.height);
-                objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth),objs.canvas.height);
+				// // 좌우 흰색 박스 그리기
+				// objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth),objs.canvas.height);
+                // objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth),objs.canvas.height);
 
+                objs.context.fillRect(parseInt(calcValues(values.rect1X, currentYOffset)),0,parseInt(whiteRectWidth),objs.canvas.height);
+                objs.context.fillRect(parseInt(calcValues(values.rect2X, currentYOffset)),0,parseInt(whiteRectWidth),objs.canvas.height);
+
+                // if(캔버스가 브라우저 상단에 닿지 않았다면) {
+                //     step 1 
+                // }else if(캔버스가 브라우저 상단에 닿았다면) {
+                //     step 2
+                //     if(step 3)
+                // }
+
+
+                if(scrollRatio < values.rect1X[2].end){
+                    step = 1;
+                    objs.canvas.classList.remove('sticky');
+                }else {
+                    step = 2;
+                    objs.canvas.classList.add('sticky');
+                    objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) /2}px`;
+                }
 
                 break;
         }
