@@ -118,6 +118,10 @@
                     rect1X : [ 0, 0, {start: 0, end: 0}],
                     rect2X : [ 0, 0, {start: 0 , end: 0}],
                     rectStartY : 0,
+                    blendHeight : [0, 0, {start :0, end : 0}],
+                    canvas_Scale : [0, 0, {start: 0, end : 0}],
+                    canvasCaption_Opacity : [ 0, 1, {start: 0, end: 0}],
+                    canvasCaption_TranslateY : [ 20, 0, {start: 0, end: 0}]
                 }
         },
     ];
@@ -202,7 +206,6 @@
         }else {
             rv = scrollRatio * (values[1] - values[0]) + values[0];
         }
-        
         return rv;
     }
 
@@ -414,10 +417,51 @@
                     objs.canvas.classList.remove('sticky');
                 }else {
                     step = 2;
+                    //imageBlendY : [0, 0, {start :0, end : 0}]
+                    values.blendHeight[0] = 0;
+                    values.blendHeight[1] = objs.canvas.height;
+                    values.blendHeight[2].start = values.rect1X[2].end;
+                    //이전이미지의 끝점이 이 새로운 이미지 (블렌딩 될)의 시작점 이기 때문에
+                    values.blendHeight[2].end = values.blendHeight[2].start + 0.2; 
+                    const blendHeight = calcValues(values.blendHeight, currentYOffset);
+                    
+                    objs.context.drawImage(objs.images[1], 
+                        0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight,
+                        0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight,
+                    );
+
                     objs.canvas.classList.add('sticky');
                     objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) /2}px`;
+                    
+                    if(scrollRatio > values.blendHeight[2].end) {
+                        values.canvas_Scale[0] = canvasScaleRatio;
+                        values.canvas_Scale[1] = document.body.offsetWidth / ( 1.5 * objs.canvas.width);
+                        // 스마트 폰이든 여러 디스플레이에 맞게 폭이 작아져야하기때문에
+                        values.canvas_Scale[2].start = values.blendHeight[2].end;
+                        values.canvas_Scale[2].end = values.canvas_Scale[2].start + 0.2;
+
+                        objs.canvas.style.transform = `scale(${calcValues(values.canvas_Scale, currentYOffset)})`;
+                        objs.canvas.style.marginTop = 0
+                    }
+
+                    if(scrollRatio > values.canvas_Scale[2].end && values.canvas_Scale[2].end > 0) {
+                        objs.canvas.classList.remove('sticky');
+                        //마지막 이미지가 다 전부 스케일 감소 된 이후 position 을 fixed 제거 한다.
+
+                        objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+
+                        values.canvasCaption_Opacity[2].start = values.canvas_Scale[2].end;
+                        values.canvasCaption_Opacity[2].end = values.canvasCaption_Opacity[2].start + 0.1;
+
+                        values.canvasCaption_TranslateY[2].start = values.canvas_Scale[2].end;
+                        values.canvasCaption_TranslateY[2].end = values.canvasCaption_Opacity[2].start + 0.1;
+
+                        objs.canvasCaption.style.opacity = calcValues(values.canvasCaption_Opacity, currentYOffset);
+                        objs.canvasCaption.style.transform = `translate3d(0, ${calcValues(values.canvasCaption_TranslateY, currentYOffset)}%, 0)`;
+                    }
                 }
 
+                
                 break;
         }
         //해당 신 인덱스 일때만 애니메이션을 실행 할 것 
