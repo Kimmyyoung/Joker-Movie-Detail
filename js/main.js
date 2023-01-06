@@ -529,31 +529,55 @@
     }
 
 
-    window.addEventListener('scroll', ()=>{
-        yOffset = window.pageYOffset;
-        scrollLoop();
-        checkMenu();
-        if(!rafState) {
-            rafId = requestAnimationFrame(loop);
-            rafState = true;
-        }
-    });
+    
     window.addEventListener('load', ()=>{
         document.body.classList.remove('before-load');
         setLayout();
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0],0,0);
-    });
-    document.querySelector('.loading').addEventListener('transitionend', (e) =>{
-        document.body.removeChild(e.currentTarget);
-    })
-    window.addEventListener('resize', () => {
-        if(window.innerWidth > 600) {
-            setLayout();
-        }
 
-        sceneInfo[3].values.rectStartY = 0;
-    });   
-    window.addEventListener('orientationchange', setLayout);
+        let tempYOffset = yOffset;
+        let tempScrollCount = 0;
+        if(yOffset > 0) {
+            let siId = setInterval(() => {
+                window.scrollTo(0, tempYOffset);
+                tempYOffset += 5;           
+                if(tempScrollCount > 20) {
+                    clearInterval(siId);
+                }
+                tempScrollCount++;     
+            }, 20);    
+        }        
+
+        window.addEventListener('scroll', ()=>{
+            yOffset = window.pageYOffset;
+            scrollLoop();
+            checkMenu();
+            if(!rafState) {
+                rafId = requestAnimationFrame(loop);
+                rafState = true;
+            }
+        });
+
+        document.querySelector('.loading').addEventListener('transitionend', (e) =>{
+            document.body.removeChild(e.currentTarget);
+        })
+
+        window.addEventListener('resize', () => {
+            if(window.innerWidth > 900) {
+                // setLayout();
+                // sceneInfo[3].values.rectStartY = 0;
+                window.location.reload();
+            }
+            // target device screen : 900
+        });
+        window.addEventListener('orientationchange', ()=>{
+            scrollTo(0,0);
+            setTimeout(()=>{
+                window.location.reload();
+            }, 500);
+        });
+    });
+    
     //핸드폰 가로본능
 
 
