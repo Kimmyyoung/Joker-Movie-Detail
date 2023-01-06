@@ -353,7 +353,7 @@
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
                     
                     const whiteRectWidth = recalculatedInnerWidth * 0.15;
-                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+					values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
                     values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
                     values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
                     values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
@@ -485,13 +485,26 @@
             prevScrollHeight += sceneInfo[i].scrollHeight;
         }
 
-        if( yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight ) {
+        if( delayedYOffset < prevScrollHeight + sceneInfo[currentScene].scrollHeight ) {
+            document.body.classList.remove('scroll-effect-end');
+        }
+
+        if( delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight ) {
             enterNewScene = true;
-            currentScene++;
+            
+            if(currentScene === sceneInfo.length-1) {
+                document.body.classList.add('scroll-effect-end');
+            }
+            
+            
+            if(currentScene < sceneInfo.length - 1){
+                currentScene++;
+            }
+            
             document.body.setAttribute('id',`show-scene-${currentScene}`);
         }
 
-        if( yOffset < prevScrollHeight ) {
+        if( delayedYOffset < prevScrollHeight ) {
             if(currentScene === 0) return; 
             //IE : currentScene could be "-1" => exception code
             enterNewScene = true;
