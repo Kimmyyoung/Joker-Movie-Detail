@@ -114,7 +114,8 @@
                     context: document.querySelector('.image-blend-canvas').getContext('2d'),
                     imagesPath: [
                         './images/blend-image-1.jpg',
-                        './images/blend-image-2.jpg'
+                        './images/blend-image-2.jpg',
+                        './images/blend-image-3.jpg'
                     ],
                     images: []
                 },
@@ -135,7 +136,7 @@
 
         for(let i=0; i<sceneInfo[0].values.videoImageCount; i++) {
             imgElem = new Image();
-            imgElem.src = `./video/001/IMG_${6726+i}.JPG`;
+            imgElem.src = `./video/001/IMG_${6726+i}.jpg`;
             sceneInfo[0].objs.videoImages.push(imgElem);
         }
 
@@ -347,7 +348,7 @@
                     objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
                     objs.context.fillStyle = 'white';
                     //색상을 흰색으로 변경 (rect 부분)
-                    objs.context.drawImage(objs.images[0],0,0);
+                    objs.context.drawImage(objs.images[2],0,0);
     
                     const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
@@ -384,7 +385,7 @@
                 objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
                 objs.context.fillStyle = 'white';
                 //색상을 흰색으로 변경 (rect 부분)
-                objs.context.drawImage(objs.images[0],0,0);
+                objs.context.drawImage(objs.images[2],0,0);
 
                 const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                 const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;

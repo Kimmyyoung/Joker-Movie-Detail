@@ -1,4 +1,8 @@
 @charset 'utf-8';
+@font-face {
+    font-family: 'Facon';
+    src: url('../font/Facon.otf') format('truetype');
+}
 
 html {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -61,6 +65,7 @@ body.before-load {
 	align-items: center;
 	max-width: 1000px;
 	height: 100%;
+	letter-spacing: 2px;
 	margin: 0 auto;
 }
 .global-nav-links {
@@ -82,6 +87,7 @@ body.before-load {
 	padding-top: 50vh;
 }
 #scroll-section-0 h1 {
+    font-family: 'Facon' !important;
 	position: relative;
 	top: -10vh;
 	z-index: 5;
@@ -89,6 +95,7 @@ body.before-load {
 	text-align: center;
 }
 .main-message {
+	font-family: 'Facon' !important;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -165,7 +172,7 @@ body.before-load {
 	justify-content: center;
 	height: 7rem;
 	color: white;
-	background: darkorange;
+	background: #3C4048;
 }
 
 .sticky-elem {
@@ -238,7 +245,7 @@ body.before-load {
 .loading-circle {
 	width: 54px;
 	height: 54px;
-	animation: loading-spin 3s infinite;
+	animation: loading-spin 1s infinite;
 }
 .loading-circle circle {
 	stroke: black;
