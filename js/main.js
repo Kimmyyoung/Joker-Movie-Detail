@@ -28,8 +28,8 @@
                 //수천장의 이미지들을 여기에 넣을 예정 
             },
             values: {
-				videoImageCount: 300,
-				imageSequence: [0, 299],
+				videoImageCount: 400,
+				imageSequence: [0, 399],
                 //폴더 001 (스크린 0에 사용될 이미지의 갯수)
 				canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
 				messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
@@ -77,8 +77,9 @@
                 videoImages:[]
             },
             values: {
-                videoImageCount: 960,
-				imageSequence: [0, 959],
+                videoImageCount: 641,
+                // videoImageCount: 960,
+				imageSequence: [0, 640],
                 //폴더 001 (스크린 0에 사용될 이미지의 갯수)
 				canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
                 canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }],
@@ -136,7 +137,7 @@
 
         for(let i=0; i<sceneInfo[0].values.videoImageCount; i++) {
             imgElem = new Image();
-            imgElem.src = `./video/001/IMG_${6726+i}.jpg`;
+            imgElem.src = `./video/003/IMG_${6710+i}.jpg`;
             sceneInfo[0].objs.videoImages.push(imgElem);
         }
 
@@ -144,7 +145,7 @@
 
         for(let i=0; i<sceneInfo[2].values.videoImageCount; i++) {
             imgElem2 = new Image();
-            imgElem2.src = `./video/002/IMG_${7027+i}.JPG`;
+            imgElem2.src = `./video/004/IMG_${7027+i}.JPG`;
             sceneInfo[2].objs.videoImages.push(imgElem2);
         }
         
