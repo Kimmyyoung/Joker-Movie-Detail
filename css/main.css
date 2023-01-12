@@ -142,19 +142,24 @@ body.before-load {
 	width: 45%;
 	font-weight: bold;
 	opacity: 0;
+	color: white;
 }
 .pin {
 	width: 1px;
 	height: 100px;
-	background: rgb(29, 29, 31);
+	background: white;
 }
 #scroll-section-2 .b {
 	top: 10%;
 	left: 40%;
+	color: white;
+
 }
 #scroll-section-2 .c {
 	top: 15%;
 	left: 45%;
+	color: white;
+
 }
 .mid-message {
 	max-width: 1000px;

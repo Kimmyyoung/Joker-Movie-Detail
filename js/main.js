@@ -77,9 +77,9 @@
                 videoImages:[]
             },
             values: {
-                videoImageCount: 641,
+                videoImageCount: 790,
                 // videoImageCount: 960,
-				imageSequence: [0, 640],
+				imageSequence: [0, 789],
                 //폴더 001 (스크린 0에 사용될 이미지의 갯수)
 				canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
                 canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }],
@@ -115,8 +115,7 @@
                     context: document.querySelector('.image-blend-canvas').getContext('2d'),
                     imagesPath: [
                         './images/blend-image-1.jpg',
-                        './images/blend-image-2.jpg',
-                        './images/blend-image-3.jpg'
+                        './images/blend-image-2.jpg'
                     ],
                     images: []
                 },
@@ -347,9 +346,9 @@
                     
                     
                     objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
-                    objs.context.fillStyle = 'white';
+                    objs.context.fillStyle = 'black';
                     //색상을 흰색으로 변경 (rect 부분)
-                    objs.context.drawImage(objs.images[2],0,0);
+                    objs.context.drawImage(objs.images[0],0,0);
     
                     const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
@@ -384,9 +383,9 @@
                 
                 
                 objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
-                objs.context.fillStyle = 'white';
+                objs.context.fillStyle = 'black';
                 //색상을 흰색으로 변경 (rect 부분)
-                objs.context.drawImage(objs.images[2],0,0);
+
 
                 const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                 const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
@@ -402,8 +401,9 @@
                     values.rect2X[2].end = values.rectStartY / scrollHeight;
                 }
                 
+                objs.context.drawImage(objs.images[0],0,0);
 
-                const whiteRectWidth = recalculatedInnerWidth * 0.15;
+                const whiteRectWidth = recalculatedInnerWidth * 0.35;
 				values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
 				values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
 				values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
