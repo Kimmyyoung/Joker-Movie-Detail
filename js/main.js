@@ -24,7 +24,8 @@
 				messageD: document.querySelector('#scroll-section-0 .main-message.d'),
                 canvas: document.querySelector('#video-canvas-0'),
                 context: document.querySelector('#video-canvas-0').getContext('2d'),
-                videoImages:[]
+                videoImages:[],
+                ribbonPath: document.querySelector('.ribbon-path path')
                 //수천장의 이미지들을 여기에 넣을 예정 
             },
             values: {
@@ -48,6 +49,8 @@
 				messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
 				messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
 				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }],
+                path_dashoffset_in: [1401, 0, { start: 0.2, end: 0.4 }],
+				path_dashoffset_out: [0, -1401, { start: 0.6, end: 0.8 }],
 			}
         },
         {
@@ -100,7 +103,9 @@
                 pinB_opacity_in: [0, 1, { start: 0.5, end: 0.55 }],
                 pinC_opacity_in: [0, 1, { start: 0.72, end: 0.77 }],
                 pinB_opacity_out: [1, 0, { start: 0.58, end: 0.63 }],
-                pinC_opacity_out: [1, 0, { start: 0.85, end: 0.9 }]
+                pinC_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
+                rect1X : [ 0, 0, {start: 0, end: 0}],
+                rect2X : [ 0, 0, {start: 0 , end: 0}],
             }
         },
         {
@@ -241,12 +246,14 @@
 
                 if (scrollRatio <= 0.22) {
                     // in
+                    objs.ribbonPath.style.strokeDashoffset = calcValues(values.path_dashoffset_in, currentYOffset);
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
                     objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
                     //translate3d : (x,y,z) => 속성으로 xyz 를 다 컨트롤 할 수 있고, 3d 가 붙은 속성들은 하드웨어 가속이 보장되어 
                     // 퍼포먼스가 좋기 때문에 translateY (y만 컨트롤 하기때문에) 이걸 사용할 순 있지만 퍼포먼스가 좋은 translate3d를 사용한다.
                 } else {
                     // out
+                    objs.ribbonPath.style.strokeDashoffset = calcValues(values.path_dashoffset_out, currentYOffset);
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
                     objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
                 }
@@ -280,6 +287,9 @@
                     objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
                     objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
                 }
+
+          
+
                 break;
 
             case 1:
@@ -344,27 +354,29 @@
                         canvasScaleRatio = widthRatio;
                     }
                     
-                    
                     objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
                     objs.context.fillStyle = 'black';
-                    //색상을 흰색으로 변경 (rect 부분)
                     objs.context.drawImage(objs.images[0],0,0);
     
                     const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
                     
-                    const whiteRectWidth = recalculatedInnerWidth * 0.15;
-					values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
-                    values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
-                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
-                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+                    const BlackRectWidth = recalculatedInnerWidth * 0.25;
+
+                    values.rect1X[0] = ((objs.canvas.width - recalculatedInnerWidth) / 2);
+                    console.log(values.rect1X[0]);
+                    values.rect1X[1] = values.rect1X[0] - BlackRectWidth;
+                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - BlackRectWidth;
+                    values.rect2X[1] = values.rect2X[0] + BlackRectWidth;
     
+
+                    
                     //좌우 흰색 박스 그리기
-                    objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
-                    objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
-    
-    
+                    objs.context.fillRect(values.rect1X[0], 0, parseInt(BlackRectWidth), objs.canvas.height);
+                    objs.context.fillRect(values.rect2X[0], 0, parseInt(BlackRectWidth), objs.canvas.height);
+
                 }
+
 
 
                 break;
@@ -403,7 +415,7 @@
                 
                 objs.context.drawImage(objs.images[0],0,0);
 
-                const whiteRectWidth = recalculatedInnerWidth * 0.35;
+                const whiteRectWidth = recalculatedInnerWidth * 0.25;
 				values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
 				values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
 				values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;

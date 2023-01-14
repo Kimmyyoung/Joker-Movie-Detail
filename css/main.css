@@ -4,6 +4,17 @@
     src: url('../font/Facon.otf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Grave';
+    src: url('../font/Grave.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Akira';
+    src: url('../font/Akira.otf') format('truetype');
+}
+
+
 html {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 14px;
@@ -91,8 +102,26 @@ body.before-load {
 	padding-top: 50vh;
 	background-color: black;
 }
+
+.ribbon-path {
+	top: 80%;
+	min-width: 850px;
+	transform: translate(-2%, -60%);
+	z-index: 20;
+}
+.ribbon-path path {
+	fill: none;
+	stroke: white;
+	stroke-width: 55;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 1401, 1401;
+	stroke-dashoffset: 1401;
+	opacity: 0.5;
+}
+
 #scroll-section-0 h1 {
-    font-family: 'Facon' !important;
+    font-family: 'Akira' !important;
 	color: white;
 	position: relative;
 	top: -10vh;
@@ -101,7 +130,7 @@ body.before-load {
 	text-align: center;
 }
 .main-message {
-	font-family: 'Facon' !important;
+	font-family: 'Akira' !important;
 	color: white;
 	display: flex;
 	align-items: center;
@@ -109,8 +138,9 @@ body.before-load {
 	top: 35vh;
 	margin: 5px 0;
 	height: 3em;
-	font-size: 2.5rem;
+	font-size: 4rem;
 	opacity: 0;
+	z-index: 21;
 }
 .main-message p {
 	font-weight: bold;
@@ -147,29 +177,31 @@ body.before-load {
 .pin {
 	width: 1px;
 	height: 100px;
-	background: white;
+	background: #888;
 }
 #scroll-section-2 .b {
 	top: 10%;
 	left: 40%;
-	color: white;
+	color: #888;
 
 }
 #scroll-section-2 .c {
 	top: 15%;
 	left: 45%;
-	color: white;
-
+	color: #888;
 }
 .mid-message {
+	font-family: 'Akira';;
 	max-width: 1000px;
 	margin: 0 auto;
 	padding: 0 1rem;
 	font-size: 2rem;
+	line-height: 5rem;
 	color: #888;
 }
 .mid-message strong {
 	color: rgb(29, 29, 31);
+	font-size: 3rem;
 }
 .canvas-caption {
 	max-width: 1000px;
@@ -185,6 +217,7 @@ body.before-load {
 	height: 7rem;
 	color: white;
 	background: #3C4048;
+	letter-spacing: 0.1rem;
 }
 
 .sticky-elem {
