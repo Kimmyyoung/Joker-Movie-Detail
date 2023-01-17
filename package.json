@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open --mode=development",
-    "build": "webpack --mode=production"  
+    "build": "webpack --mode=production"
   },
   "repository": {
     "type": "git",
@@ -31,8 +31,8 @@
     "webpack-dev-server": "^4.11.1"
   },
   "devDependencies": {
-    "file-loader": "^6.2.0",
     "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^11.0.0"
+    "copy-webpack-plugin": "^11.0.0",
+    "file-loader": "^6.2.0"
   }
 }

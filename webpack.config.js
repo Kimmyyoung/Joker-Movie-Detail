@@ -1,8 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
+
     entry: [
         './src/js/main.js',
         './src/css/main.css',
@@ -14,10 +17,11 @@ module.exports = {
     performance: {
         hints: false,
         maxEntrypointSize: 512000,
-        maxAssetSize: 512000
+        maxAssetSize: 512000,
     },
     plugins: [
-        new HtmlWebpackPlugin({
+       new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
         template: "./index.html" // index.html을 기본 템플릿으로 반영할 수 있도록 설정
     }),     
     new CopyWebpackPlugin({
