@@ -1,5 +1,5 @@
+
 (()=>{
-    
     let yOffset=0;
     let prevScrollHeight=0; //현재 스크롤의 합 보다 이전에 위치한 스크롤 섹션의 높이의 합
     let currentScene = 0; //현재 활성화된 신 값
@@ -609,5 +609,4 @@
 
 
     setCanvasImages();
-
 })();
