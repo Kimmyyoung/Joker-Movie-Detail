@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Kimmyyoung/Website/issues"
   },
-  "homepage": "https://github.com/Kimmyyoung/Website#readme"
+  "homepage": "https://github.com/Kimmyyoung/Website#readme",
+  "engines": {
+    "node": "^16.14.0"
+  }
 }
