@@ -1,17 +1,17 @@
 @charset 'utf-8';
 @font-face {
     font-family: 'Facon';
-    src: url('../font/Facon.otf') format('truetype');
+    src: url('/font/Facon.otf') format('truetype');
 }
 
 @font-face {
     font-family: 'Grave';
-    src: url('../font/Grave.ttf') format('truetype');
+    src: url('/font/Grave.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Akira';
-    src: url('../font/Akira.otf') format('truetype');
+    src: url('/font/Akira.otf') format('truetype');
 }
 
 
@@ -111,7 +111,7 @@ body.before-load {
 }
 .ribbon-path path {
 	fill: none;
-	stroke: white;
+	stroke: #DDDDDD;
 	stroke-width: 55;
 	stroke-linecap: round;
 	stroke-linejoin: round;
