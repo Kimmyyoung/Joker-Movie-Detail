@@ -40,7 +40,8 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white)
 ![Sass](https://img.shields.io/badge/Sass-CC6699.svg?&style=for-the-badge&logo=Sass&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=white)
-![jQuery](https://img.shields.io/badge/jQuery-0769AD.svg?&style=for-the-badge&logo=jQuery&logoColor=white)
+![Webpack](https://img.shields.io/badge/Webpack-8DD6F9.svg?&style=for-the-badge&logo=Webpack&logoColor=white)
+
 
 <h3> :hammer: Tools </h3>
 <hr/>
@@ -48,6 +49,7 @@
 
 ![GitHub](https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/VisualStudioCode-007ACC.svg?&style=for-the-badge&logo=GitHub&logoColor=white)
+![Microsoft&nbsp;Azure](https://img.shields.io/badge/Microsoft&nbsp;Azure-0078D4.svg?&style=for-the-badge&logo=Microsoft&nbsp;Azure&logoColor=white)
 
 
 
