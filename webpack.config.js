@@ -11,6 +11,11 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js'
     },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
     plugins: [
         new HtmlWebpackPlugin({
         template: "./index.html" // index.html을 기본 템플릿으로 반영할 수 있도록 설정
