@@ -4,7 +4,8 @@
   "description": "scroll interaction website",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/Kimmyyoung/Website/issues"
   },
-  "homepage": "https://github.com/Kimmyyoung/Website#readme"
+  "homepage": "https://github.com/Kimmyyoung/Website#readme",
+  "devDependencies": {
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^5.5.0"
+  }
 }
