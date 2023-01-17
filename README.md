@@ -20,8 +20,7 @@
 <h3> :sparkles: Preview </h3>
 <hr/>
 
-![portfolio-readme](https://user-images.githubusercontent.com/97567561/189766383-e0471453-22ee-467a-9d0a-b1c8300aada1.png)
-
+<img src="https://i.ibb.co/tLywrD3/website.gif" alt="website" border="0" />
 
 
 <h3> :link: Web Link </h3>
